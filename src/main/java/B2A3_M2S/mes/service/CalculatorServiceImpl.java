@@ -5,6 +5,7 @@ import B2A3_M2S.mes.entity.Production;
 import B2A3_M2S.mes.repository.*;
 import B2A3_M2S.mes.util.enums.NumPrefix;
 import B2A3_M2S.mes.util.service.NumberingService;
+import B2A3_M2S.mes.util.service.UtilService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -45,6 +46,8 @@ public class CalculatorServiceImpl implements CalculatorService {
     private EntityManager entityManager;
     // 나는 시뮬레이터
 
+    @Autowired
+    private UtilService utilService;
     @Transactional
     @Override
     public LocalDateTime getDeliveryDate(LocalDateTime startTime, ObtainOrderDto oDto) {
@@ -274,8 +277,8 @@ public class CalculatorServiceImpl implements CalculatorService {
         return start.plusMinutes(workTime + leadTime);
     }
 
-/*    @Scheduled(fixedDelay = 30000)
-    @Transactional*/
+    /*    @Scheduled(fixedDelay = 30000)
+        @Transactional*/
     @Override
     public void schedulerApplication() {
         System.out.println("스케쥴러 실행 중");
@@ -285,7 +288,8 @@ public class CalculatorServiceImpl implements CalculatorService {
         if (list.size() > 0) {
             list.stream().forEach(a -> a.setStatus("STATUS02"));
             productionRepository.saveAll(list.stream().map(ProductionDTO::createProduction).collect(Collectors.toList()));
-
+            utilService.saveInput(list);
+/*
             // 출고 루틴 해야할지 정함
             boolean releaseCheck = false;
             for (int i = 0; i < list.size(); i++) {
@@ -295,26 +299,18 @@ public class CalculatorServiceImpl implements CalculatorService {
                 }
             }
 
-            if(releaseCheck) {
-                /*
+            if (releaseCheck) {
+                *//*
             ////////////////////////////////////////////////////////////////////
             ////////////// 출고 로직 작성 및 재고 테이블 차감 로직 작성 //////////////
             ///////////////////////////////////////////////////////////////////
             //////////////////// 걍 자재 투입시마다 출고로 떄려버려 ////////////////
             //////////////////////////////////////////////////////////////////
-             */
-                System.out.println("큰일");
-            }
-
-
-
-
-
+             *//*
+            }*/
             /////////////////////////////////
             // 재공재고 및 Lot 이력 로직 작성 //
             /////////////////////////////////
-
-
             // 재공재고 조회
 
 
@@ -335,7 +331,8 @@ public class CalculatorServiceImpl implements CalculatorService {
             }
 
             // 우선 생산완료로 변경
-            productionRepository.saveAll(list.stream().map(ProductionDTO::createProduction).collect(Collectors.toList()));
+            list = productionRepository.saveAll(list.stream().map(ProductionDTO::createProduction).collect(Collectors.toList())).stream().map(ProductionDTO::of).collect(Collectors.toList());
+            utilService.saveOutput(list);
 
             /////////////////////////////////
             // 재공재고 및 Lot 관련 로직 작성 //

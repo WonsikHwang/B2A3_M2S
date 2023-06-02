@@ -13,6 +13,7 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Stock, Long>, QuerydslPredicateExecutor<Stock> {
 
     List<Stock> findByItemOrderByRegDate(Item item);
+
     List<Stock> findByItem(Item item);
 
     List<Stock> findByQtyIsNot(Long qty);

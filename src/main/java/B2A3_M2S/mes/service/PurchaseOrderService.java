@@ -39,6 +39,8 @@ public class PurchaseOrderService {
 
     @Autowired
     PurchaseOrderRepository purchaseOrderRepository;
+    @Autowired
+    StockService stockService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -229,7 +231,7 @@ public class PurchaseOrderService {
         return dueTime;
     }
 
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(cron = "0 * * * * *")
     @Transactional
     public void updateState(){
 
@@ -240,6 +242,7 @@ public class PurchaseOrderService {
             if (now.compareTo(dueTime) > 0) {
                 list.setPurchaseState("ORDER03");
                 purchaseOrderRepository.save(list);
+                stockService.addMaterials(list.getItem(), list.getOrderQty());
             }
         }
 

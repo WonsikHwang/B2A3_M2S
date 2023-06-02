@@ -48,10 +48,7 @@ public class StockServiceTests {
     @Test
     public void releaseStockTest(){
         Item item =repository.findByItemNm("양배추");
-
        service.releaseItem(item, 105L);
-
-
     }
     @Test
     public void asdsadada(){
