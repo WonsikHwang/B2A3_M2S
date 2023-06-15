@@ -2,7 +2,6 @@ package B2A3_M2S.mes.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,11 +16,11 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class BaseTimeEntity {
+public abstract class BaseTimeEntity2 {
     @CreatedDate
     @Column(updatable = false)
-    private LocalDate regDate;
+    private LocalDateTime regDate;
 
     @LastModifiedDate
-    private LocalDate modDate;
+    private LocalDateTime modDate;
 }

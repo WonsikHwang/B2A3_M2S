@@ -1,5 +1,6 @@
 package B2A3_M2S.mes.entity;
 
+import B2A3_M2S.mes.dto.ProductionDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,10 +8,9 @@ import javax.persistence.*;
 @Data
 @Builder
 @Entity
-@Table
 @AllArgsConstructor
 @NoArgsConstructor
-public class LotNoLog extends BaseTimeEntity{
+public class LotNoLog extends BaseTimeEntity2{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lotSeq;
@@ -35,8 +35,13 @@ public class LotNoLog extends BaseTimeEntity{
     private Long outputQty;  //생산 수량
     private String remark;  //비고
 
-
     @ManyToOne
     @JoinColumn(name = "output_item_cd")
     private Item oItem;
+
+    @ManyToOne
+    @JoinColumn(name = "plan_no")
+    private Production production;
 }
+
+

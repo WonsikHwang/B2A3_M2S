@@ -1,6 +1,7 @@
 package B2A3_M2S.mes.repository;
 
 import B2A3_M2S.mes.entity.ObtainOrder;
+import B2A3_M2S.mes.entity.Processes;
 import B2A3_M2S.mes.entity.Production;
 import B2A3_M2S.mes.entity.PurchaseOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,9 +22,10 @@ public interface ProductionRepository extends JpaRepository<Production, String>,
     @Query("SELECT p FROM Production p WHERE  p.startDate <= CURRENT_TIMESTAMP AND" +
             " CURRENT_TIMESTAMP <= p.endDate AND p.status = 'STATUS01'")
     List<Production> findByStartDateAndEndDateAndStatus();
-    @Query("SELECT p FROM Production p WHERE p.endDate <= CURRENT_TIMESTAMP AND (p.status = 'STATUS01' or p.status = 'STATUS02')")
+    @Query("SELECT p FROM Production p WHERE p.endDate <= CURRENT_TIMESTAMP AND p.status = 'STATUS02'")
     List<Production> findByEndDateAndStatus();
 
-    Production findByProcessesProcCdAndStatus(String ProcCd , String status);
+    List<Production> findByObtainOrderAndProcesses(ObtainOrder obtainOrder, Processes processes);
 
+    List<Production> findByProcessesProcCdAndStatus(String procCd, String status);
 }

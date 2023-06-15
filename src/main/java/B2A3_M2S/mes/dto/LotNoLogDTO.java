@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LotNoLogDTO extends BaseTimeEntity {
+public class LotNoLogDTO extends BaseTimeEntity2 {
     private Long lotSeq;
     private Long pLotSeq1;
     private Long pLotSeq2;
@@ -23,8 +23,10 @@ public class LotNoLogDTO extends BaseTimeEntity {
     private ProcessesDto processes; //공정 코드
     private Long inputQty;  //투입 수량
     private Long outputQty;  //생산 수량
+    private Long outputQty2;  //생산 수량(임시저장)
     private String remark;  //비고
     private ItemDto oItem;
+    private ProductionDTO production;
 
     public static ModelMapper modelMapper = new ModelMapper();
 

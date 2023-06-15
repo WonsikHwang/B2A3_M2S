@@ -20,5 +20,9 @@ public interface ProcessStockRepository extends JpaRepository<ProcessStock, Long
     List<Stock> findByRegDateBetween(LocalDate startDate, LocalDate endDate);*/
     List<ProcessStock> findByQtyNot(Long qty);
     List<ProcessStock> findByItemAndQtyNot(Item item, Long qty);
+    List<ProcessStock> findByQtyNotAndLocationAndItem(Long qty, String location, Item item);
+
+    // 공정재고에서 사용
+    List<ProcessStock> findByQtyNotAndLocation(Long qty, String location);
 
 }
